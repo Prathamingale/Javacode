@@ -1,0 +1,72 @@
+Code:calculator
+import java.util.Scanner;
+
+public class Calci {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Scanner sc = new Scanner(System.in);
+		int ch1, ch;
+		do
+		{
+			System.out.println("\n1-addition\n2-subtract\n3-division\n4-multiplication\n5-factorial");
+			System.out.println("enter your choice");
+			ch=sc.nextInt();
+			switch(ch)
+			{
+			case 1:
+				System.out.println("enter two numbers for addition");
+				int n1=sc.nextInt();
+				int n2 = sc.nextInt();
+				int sum= n1+n2;
+				System.out.println("sum of the numbers is:" +sum);
+				break;
+
+			case 2:
+				System.out.println("enter any 2 numbers for subtraction");
+				int n3=sc.nextInt();
+				int n4=sc.nextInt();
+				int sub=n3-n4;
+				System.out.println("subtraction of two numbers is: "+sub);
+				break;
+
+			case 3:
+				System.out.println("enter any 2 numbers for multiplication");
+				int n5=sc.nextInt();
+				int n6=sc.nextInt();
+				int mult=n5*n6;
+				System.out.println("multiplication of two numbers is: "+mult);
+				break;
+
+			case 4:
+				System.out.println("enter any 2 numbers for division");
+				int n7=sc.nextInt();
+				int n8=sc.nextInt();
+				float div=n7/n8;
+				System.out.println("division of two numebers is: "+div);
+				break;
+
+			case 5:
+				System.out.println("enter the number for factorial");
+				int n9 = sc.nextInt();
+				int fact=1;
+				for(int i=n9;i>1;i--)
+				{
+					fact=fact*i;
+				}
+				System.out.println("factorial is: "+fact);
+
+				break;
+			}
+			System.out.println("do you want to continue press 1");
+			ch1=sc.nextInt();
+		}while(ch==1);
+		System.out.println("thankyou");
+	}
+
+}
+
+
+
+

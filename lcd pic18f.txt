@@ -1,0 +1,77 @@
+#include <pic18f4550.h>
+#include<stdio.h>
+#define LCD_EN PORTCbits.RC1
+#define LCD_RS PORTCbits.RC0
+#define LCDPORT PORTB       ///Port B connected to data bus of LCD 
+
+void lcd_delay(unsigned int time)
+{
+ unsigned int i , j ;
+
+    for(i = 0; i < time; i++)
+    {
+            for(j=0;j<50;j++);
+    }
+}
+void LCD_cmd(unsigned char command)
+{
+     LCD_RS = 0;		// RS low : Instruction register 
+     LCDPORT = command;
+     LCD_EN = 1;		// EN High
+     lcd_delay(10);
+     LCD_EN = 0;	
+     lcd_delay(10);
+}
+
+void LCD_write(unsigned char lcddata)
+{
+     LCD_RS = 1;		// RS HIGH : DATA Register 
+     LCDPORT = lcddata;
+     LCD_EN = 1;		// EN High
+     lcd_delay(10);
+     LCD_EN = 0;	
+     lcd_delay(10);
+}
+
+
+
+void main()
+{
+    unsigned short Ch_result;
+    unsigned char i,text[16];
+    TRISB = 0x00;                
+    TRISCbits.TRISC0 = 0; 
+    TRISCbits.TRISC1 = 0; 
+    TRISEbits.TRISE1 = 1;                 
+    LCD_cmd(0x38);      //8 bit mode, 2 line,5x7 dots
+    LCD_cmd(0x06);	// entry mode
+    LCD_cmd(0x0C);	//Display ON cursor OFF
+    LCD_cmd(0x01);      //Clear display
+    LCD_cmd(0x80);      //set address to line 1 ,column 0
+   //ADC Initialization
+    ADCON0 = 0b00011001;      	
+    ADCON1 = 0b00000111;   
+    ADCON2 = 0b10101110; 
+
+    while(1)
+    {
+    
+   			
+ LCD_cmd(0x80);               
+
+ 
+        LCD_write('m');
+        lcd_delay(5000);
+        LCD_write('m');
+        lcd_delay(5000);
+        LCD_write('c');
+        lcd_delay(5000);
+        LCD_write('o');
+        lcd_delay(5000);
+        LCD_write('e');
+        lcd_delay(5000);
+        LCD_write('_');
+        lcd_delay(5000);
+    
+}
+}

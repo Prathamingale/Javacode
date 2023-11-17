@@ -1,0 +1,42 @@
+
+#include<p18f4550.h>
+
+//Function to transmit data to PC
+void TXbyte(char data)
+{
+    while(TXSTAbits.TRMT==0);
+    TXREG = data;		
+}						
+
+void main()
+{
+
+ unsigned char i=0;
+ unsigned char String[]={"Press any key from PC\n\r"};
+ unsigned char String1[]={"\n\rUART Tested\n\r"};
+
+ SSPCON1 = 0;          
+ TRISB = 0;            
+ TRISCbits.TRISC7=1;    
+ TRISCbits.TRISC6=0;  
+ SPBRG = 0x4D;       
+
+ TXSTA = 0x20;       
+ RCSTA = 0x90;       
+ 
+ for(i=0;String[i]!='\0';i++)
+ {
+  TXbyte(String[i]);
+ }
+//receive data from PC
+ while(PIR1bits.RCIF==0);
+
+	PORTB = RCREG;   
+//transmit data to PC
+ for(i=0;String1[i]!='\0';i++)
+ {
+  TXbyte(String1[i]); 
+ }
+ while(1);		
+}
+

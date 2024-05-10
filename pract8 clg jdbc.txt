@@ -1,0 +1,33 @@
+ package jdbc; 
+ 
+
+import java.sql.Connection; 
+import java.sql.DriverManager; 
+import java.sql.ResultSet; 
+import java.sql.Statement; 
+class JDBC{ 
+public static void main(String[] args){ 
+System.out.println("hello"); 
+Connection con = null; 
+try{ 
+Class.forName("com.mysql.cj.jdbc.Driver"); 
+String jdbcUrl = "jdbc:mysql://localhost:3306/std"; 
+con = DriverManager.getConnection(jdbcUrl,"root","1234"); 
+Statement stm = con.createStatement(); 
+ResultSet rs; 
+rs = stm.executeQuery("select*from customers"); 
+System.out.println("Id\tName\tage\tsalary\tAddress"); 
+while(rs.next()){ 
+int a = rs.getInt("Id"); 
+String b = rs.getString("Name"); 
+int c = rs.getInt("salary"); 
+int d = rs.getInt("age"); 
+String e = rs.getString("Address"); 
+System.out.println(a+"\t"+b+"\t"+d+"\t"+c+"\t"+e); 
+} 
+} 
+catch(Exception e){ 
+System.out.println("Exception:"+e); 
+} 
+} 
+}

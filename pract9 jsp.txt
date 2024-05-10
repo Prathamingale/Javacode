@@ -1,0 +1,11 @@
+<html>
+<body>
+My First Jsp Page <br>
+Today Date and time is=
+<%= new java.util.Date()%>
+<%
+double myno=Math.random()*100;
+out.println("<br> Random number="+myno);
+%>
+</body>
+</html>

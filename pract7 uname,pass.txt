@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+
+<div>
+    <form action="FirstServlet" method="post">
+        <div>
+            <label for="uname">Enter User Name</label>
+            <input type="text" id="uname" name="uname">
+        </div>
+        <div>
+            <label for="upass">Enter User Password</label>
+            <input type="text" id="upass" name="upass">
+        </div>
+        <button type="submit">Click Here</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+
+servlet1:
+package pract.s;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/FirstServlet")
+public class FirstServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    public FirstServlet() {
+        super();
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String str =  request.getParameter("uname");
+		String str1 = request.getParameter("upass");
+		
+		HttpSession session = request.getSession(true);
+		HttpSession session1 = request.getSession(true);
+		
+		session1.setAttribute("data1", str1);
+		session.setAttribute("data", str);
+		response.sendRedirect("SecondServlet");
+	}
+}
+
+
+
+
+servlet2:
+package pract.s;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/SecondServlet")
+public class SecondServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+  
+    public SecondServlet() {
+        super();
+    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		HttpSession session = request.getSession(true);
+		HttpSession session1 = request.getSession(true);
+		
+		String str1 = (String) session.getAttribute("data1");
+		String str = (String) session.getAttribute("data");
+		
+		PrintWriter pw = response.getWriter();
+		pw.println(" <h1>  User Name entered was : " +str+  " </h1>");
+		pw.println("<h1> Password entered was : " +str1+ "</h1>");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+}
+
+
